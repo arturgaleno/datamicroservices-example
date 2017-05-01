@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestContext.class)
-public class SisuStatefulTimeSeriesTest {
+public class FiesStatefulTimeSeriesTest {
 
     @Autowired
     private MecTimeSeriesClient mecTimeSeriesClient;
@@ -22,7 +22,7 @@ public class SisuStatefulTimeSeriesTest {
     @Test
     public void shoudReturnValuesFromWebResource() {
         StatefulTimeSeriesService statefulTimeSeriesService = new StatefulTimeSeriesService(
-                mecTimeSeriesClient.getSisuTimeSeries().getValues()
+                mecTimeSeriesClient.getFiesTimeSeries().getValues()
         );
         ApiValue value1 = statefulTimeSeriesService.getNext();
         Assert.assertNotNull(value1);

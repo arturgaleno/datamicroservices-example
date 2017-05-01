@@ -15,7 +15,7 @@ import org.springframework.messaging.support.GenericMessage;
  * Created by artur on 16/04/17.
  */
 @EnableBinding(Source.class)
-public class SisuSource {
+public class FiesSource {
 
     @Autowired
     private MecTimeSeriesClient mecTimeSeriesClient;
@@ -24,10 +24,10 @@ public class SisuSource {
 
     @Bean
     @InboundChannelAdapter(value = Source.OUTPUT)
-    public MessageSource<ApiValue> sisuMessageSource() {
+    public MessageSource<ApiValue> fiesMessageSource() {
         if (statefulTimeSeriesService == null) {
             statefulTimeSeriesService = new StatefulTimeSeriesService(
-                    mecTimeSeriesClient.getSisuTimeSeries().getValues()
+                    mecTimeSeriesClient.getFiesTimeSeries().getValues()
             );
         }
         return () -> new GenericMessage<>(statefulTimeSeriesService.getNext());
