@@ -11,6 +11,8 @@
 
     <modules>
         <module>sources</module>
+        <module>processors</module>
+        <module>aggregate-app</module>
     </modules>
 
     <properties>
