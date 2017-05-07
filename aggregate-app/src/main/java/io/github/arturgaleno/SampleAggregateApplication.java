@@ -9,7 +9,7 @@ public class SampleAggregateApplication {
 	public static void main(String[] args) {
         new AggregateApplicationBuilder()
 			.from(SourceApplication.class).namespace("source").args("--fixedDelay=5000")
-			.via(ProcessorApplication.class).namespace("processor1")
+			.via(ProcessorApplication.class).namespace("processor")
 //			.to(SinkApplication.class).namespace("sink").args("--debug=true")
 			.run(args);
 	}
