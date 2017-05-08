@@ -1,17 +1,12 @@
 package io.github.arturgaleno.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by artur on 30/04/17.
  */
 public class ApiValue {
 
-    @SerializedName("valor")
     private Long value;
-    @SerializedName("municipio_ibge")
     private Long municipalityId;
-    @SerializedName("ano")
     private Integer year;
 
     public Long getValue() {

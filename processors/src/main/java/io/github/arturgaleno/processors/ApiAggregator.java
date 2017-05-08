@@ -1,11 +1,16 @@
 package io.github.arturgaleno.processors;
 
+import com.google.gson.Gson;
 import io.github.arturgaleno.model.AggregatedValue;
 import io.github.arturgaleno.model.ApiValue;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.Input;
+import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.integration.annotation.Aggregator;
 import org.springframework.integration.annotation.CorrelationStrategy;
+import org.springframework.integration.annotation.ReleaseStrategy;
+import org.springframework.messaging.MessageChannel;
 
 import java.util.List;
 
@@ -15,6 +20,8 @@ import java.util.List;
 @EnableBinding(Processor.class)
 public class ApiAggregator {
 
+    private static final Gson GSON = new Gson();
+//--spring.cloud.stream.bindings.input.destination=apiagregator-output
     @Aggregator(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
     public AggregatedValue aggregatingMethod(List<ApiValue> items) {
         AggregatedValue aggregatedValue = new AggregatedValue();
@@ -27,8 +34,14 @@ public class ApiAggregator {
     }
 
     @CorrelationStrategy
-    public String correlateBy(ApiValue item) {
-        return item.getMunicipalityId().toString()
-                + item.getYear().toString();
+    public String correlateBy(String item) {
+        ApiValue apiValue = GSON.fromJson(item, ApiValue.class);
+        return apiValue.getMunicipalityId().toString()
+                + apiValue.getYear().toString();
+    }
+
+    @ReleaseStrategy
+    public boolean canMessagesBeReleased(List<String> msgs) {
+        return msgs.size() > 2;
     }
 }

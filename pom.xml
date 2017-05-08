@@ -13,6 +13,7 @@
         <module>sources</module>
         <module>processors</module>
         <module>aggregate-app</module>
+        <module>sinks</module>
     </modules>
 
     <properties>
