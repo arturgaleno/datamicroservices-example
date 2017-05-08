@@ -9,6 +9,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.InboundChannelAdapter;
+import org.springframework.integration.annotation.Poller;
 import org.springframework.integration.core.MessageSource;
 import org.springframework.messaging.support.GenericMessage;
 
@@ -24,7 +25,7 @@ public class SisuSource {
     private StatefulTimeSeriesService statefulTimeSeriesService;
 
     @Bean
-    @InboundChannelAdapter(value = Source.OUTPUT)
+    @InboundChannelAdapter(value = Source.OUTPUT, poller = @Poller(fixedDelay = "1"))
     public MessageSource<ApiValue> sisuMessageSource() {
         if (statefulTimeSeriesService == null) {
             statefulTimeSeriesService = new StatefulTimeSeriesService(

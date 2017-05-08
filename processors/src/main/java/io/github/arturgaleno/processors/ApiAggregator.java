@@ -1,6 +1,8 @@
 package io.github.arturgaleno.processors;
 
 import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import io.github.arturgaleno.model.AggregatedValue;
 import io.github.arturgaleno.model.ApiValue;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -12,6 +14,8 @@ import org.springframework.integration.annotation.CorrelationStrategy;
 import org.springframework.integration.annotation.ReleaseStrategy;
 import org.springframework.messaging.MessageChannel;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,25 +27,29 @@ public class ApiAggregator {
     private static final Gson GSON = new Gson();
 
     @Aggregator(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
-    public AggregatedValue aggregatingMethod(List<ApiValue> items) {
+    public AggregatedValue aggregatingMethod(List<String> items) {
+
         AggregatedValue aggregatedValue = new AggregatedValue();
-        aggregatedValue.setYear(items.get(0).getYear());
-        aggregatedValue.setMunicipalityId(items.get(0).getMunicipalityId());
-        handleSourceType(items, aggregatedValue);
+
+        items.forEach(s -> {
+            ApiValue apiValue = GSON.fromJson(s, ApiValue.class);
+            aggregatedValue.setYear(apiValue.getYear());
+            aggregatedValue.setMunicipalityId(apiValue.getMunicipalityId());
+            handleSourceType(apiValue, aggregatedValue);
+        });
+
         return aggregatedValue;
     }
 
-    private void handleSourceType(List<ApiValue> items, AggregatedValue aggregatedValue) {
-        items.forEach(apiValue -> {
-            switch (apiValue.getSourceType()) {
-                case FIES:
-                    aggregatedValue.setFiesValue(apiValue.getValue());
-                    break;
-                case SISU:
-                    aggregatedValue.setSisuValue(apiValue.getValue());
-                    break;
-            }
-        });
+    private void handleSourceType(ApiValue item, AggregatedValue aggregatedValue) {
+        switch (item.getSourceType()) {
+            case FIES:
+                aggregatedValue.setFiesValue(item.getValue());
+                break;
+            case SISU:
+                aggregatedValue.setSisuValue(item.getValue());
+                break;
+        }
     }
 
     @CorrelationStrategy
