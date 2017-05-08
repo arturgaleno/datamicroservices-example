@@ -11,8 +11,9 @@
 
     <modules>
         <module>sources</module>
-        <module>processors</module>
-        <module>sinks</module>
+        <module>api-aggregator</module>
+        <module>log-sink</module>
+        <module>ibge-municipality-handler</module>
     </modules>
 
     <properties>
@@ -40,12 +41,6 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
