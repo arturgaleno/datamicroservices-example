@@ -1,6 +1,7 @@
 package io.github.arturgaleno.sources;
 
 import io.github.arturgaleno.model.ApiValue;
+import io.github.arturgaleno.model.SourceType;
 import io.github.arturgaleno.service.MecTimeSeriesClient;
 import io.github.arturgaleno.service.StatefulTimeSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,11 @@ public class FiesSource {
                     mecTimeSeriesClient.getFiesTimeSeries().getValues()
             );
         }
-        return () -> new GenericMessage<>(statefulTimeSeriesService.getNext());
+        return () -> {
+            ApiValue next = statefulTimeSeriesService.getNext();
+            next.setSourceType(SourceType.FIES);
+            return new GenericMessage<>(next);
+        };
     }
 
 }

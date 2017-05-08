@@ -21,16 +21,27 @@ import java.util.List;
 public class ApiAggregator {
 
     private static final Gson GSON = new Gson();
-//--spring.cloud.stream.bindings.input.destination=apiagregator-output
+
     @Aggregator(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
     public AggregatedValue aggregatingMethod(List<ApiValue> items) {
         AggregatedValue aggregatedValue = new AggregatedValue();
         aggregatedValue.setYear(items.get(0).getYear());
         aggregatedValue.setMunicipalityId(items.get(0).getMunicipalityId());
-        //TODO find a way to define values
-        aggregatedValue.setFiesValue(items.get(0).getValue());
-        aggregatedValue.setSisuValue(items.get(1).getValue());
+        handleSourceType(items, aggregatedValue);
         return aggregatedValue;
+    }
+
+    private void handleSourceType(List<ApiValue> items, AggregatedValue aggregatedValue) {
+        items.forEach(apiValue -> {
+            switch (apiValue.getSourceType()) {
+                case FIES:
+                    aggregatedValue.setFiesValue(apiValue.getValue());
+                    break;
+                case SISU:
+                    aggregatedValue.setSisuValue(apiValue.getValue());
+                    break;
+            }
+        });
     }
 
     @CorrelationStrategy
@@ -42,6 +53,6 @@ public class ApiAggregator {
 
     @ReleaseStrategy
     public boolean canMessagesBeReleased(List<String> msgs) {
-        return msgs.size() > 2;
+        return msgs.size() == 2;
     }
 }

@@ -9,6 +9,8 @@ public class ApiValue {
     private Long municipalityId;
     private Integer year;
 
+    private SourceType sourceType;
+
     public Long getValue() {
         return value;
     }
@@ -31,5 +33,13 @@ public class ApiValue {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public SourceType getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(SourceType sourceType) {
+        this.sourceType = sourceType;
     }
 }

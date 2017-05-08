@@ -12,7 +12,7 @@ import org.springframework.integration.annotation.ServiceActivator;
 @EnableBinding(Sink.class)
 public class LogSink {
 
-    Logger LOGGER = LoggerFactory.getLogger(LogSink.class);
+    private Logger LOGGER = LoggerFactory.getLogger(LogSink.class);
 
     @ServiceActivator(inputChannel = Sink.INPUT)
     public synchronized void logMessage(Object msg) {
