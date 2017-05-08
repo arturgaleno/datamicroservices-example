@@ -4,8 +4,7 @@ An example of Data Microservices using Brazillian Government Data Sources.
 
 This application uses Spring Cloud Stream to read data from two Sources, and then aggregate that data in an Procesor.
 
-After aggregation, two Sinks are activated, one for logging and other to convert municipality ids from IBGE
-to municipality names reading it from other resource.
+After aggregation, a Sink is activated for logging. And other Processor to convert municipality ids from IBGE to municipality names reading it from other resource
 
 #### Running Kafka docker
 

@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by artur on 16/04/17.
  */
 @SpringBootApplication
-public class ProcessorApplication {
+public class LogSinkApplication {
 
     public static void main(String args[]) {
-        SpringApplication.run(ProcessorApplication.class, args);
+        SpringApplication.run(LogSinkApplication.class, args);
     }
 
 }

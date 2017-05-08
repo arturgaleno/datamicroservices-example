@@ -1,21 +1,14 @@
 package io.github.arturgaleno.processors;
 
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
 import io.github.arturgaleno.model.AggregatedValue;
 import io.github.arturgaleno.model.ApiValue;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.integration.annotation.Aggregator;
 import org.springframework.integration.annotation.CorrelationStrategy;
 import org.springframework.integration.annotation.ReleaseStrategy;
-import org.springframework.messaging.MessageChannel;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
