@@ -6,6 +6,10 @@ This application uses Spring Cloud Stream to read data from two Sources, and the
 
 After aggregation, a Sink is activated for logging. And other Processor to convert municipality ids from IBGE to municipality names reading it from other resource
 
+The article talking about this project can be found at:
+
+<https://medium.com/@arturgalenom/introdu%C3%A7%C3%A3o-%C3%A0-data-microservices-2210d0471f4>
+
 #### Running Kafka docker
 
 Run Kafka as message broker for communication between components.
